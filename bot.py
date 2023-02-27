@@ -1,3 +1,4 @@
+import os
 import feedparser
 import discord
 from discord.ext import tasks, commands
@@ -5,7 +6,10 @@ from bs4 import BeautifulSoup
 
 # Set up the Discord bot
 bot = commands.Bot(command_prefix='!')
-discord_channel_id = 'YOUR DISCORD CHANNEL ID HERE'
+
+# Read the bot token and channel ID from environment variables
+DISCORD_BOT_TOKEN = os.environ['DISCORD_BOT_TOKEN']
+DISCORD_CHANNEL_ID = int(os.environ['DISCORD_CHANNEL_ID'])
 
 # Set up the RSS feed
 rss_url = 'https://frame.work/blog/feed.xml'
@@ -30,7 +34,7 @@ async def check_for_new_posts():
         message = f'New post on the frame.work blog:\n\n**{latest_post.title}**\n{summary}\n{latest_post.link}'
 
         # Send the Discord message to the designated channel
-        channel = bot.get_channel(discord_channel_id)
+        channel = bot.get_channel(DISCORD_CHANNEL_ID)
         await channel.send(message)
 
 # Initialize the last_post_link attribute
@@ -43,4 +47,4 @@ async def on_ready():
     check_for_new_posts.start()
 
 # Run the bot
-bot.run('YOUR DISCORD BOT TOKEN HERE')
+bot.run(DISCORD_BOT_TOKEN)
