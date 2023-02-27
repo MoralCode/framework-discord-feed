@@ -17,8 +17,7 @@ DISCORD_BOT_TOKEN = os.environ['DISCORD_BOT_TOKEN']
 # Set up the RSS feed
 rss_url = 'https://frame.work/blog.rss'
 
-# Initialize the last_post_id attribute
-last_post_id = None
+
 
 # Initialize the subscribed_channels dictionary
 subscribed_channels = {}
@@ -33,9 +32,9 @@ async def check_for_new_posts():
     latest_post = feed.entries[0]
 
     # Check if the latest post has already been sent
-    if latest_post.id != last_post_id:
+    if latest_post.id != check_for_new_posts.last_post_id:
         # Save the ID of the latest post
-        last_post_id = latest_post.id
+        check_for_new_posts.last_post_id = latest_post.id
 
         # Format the post's title, summary, and URL into a Discord message
         soup = BeautifulSoup(latest_post.summary, 'html.parser')
@@ -46,6 +45,10 @@ async def check_for_new_posts():
         for channel_id in subscribed_channels.values():
             channel = bot.get_channel(channel_id)
             await channel.send(message)
+
+
+# Initialize the last_post_id attribute
+check_for_new_posts.last_post_id = None
 
 # Define a subscribe command that adds the current channel to the subscribed_channels dictionary
 @bot.command()
