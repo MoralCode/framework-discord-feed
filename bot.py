@@ -59,6 +59,11 @@ async def subscribe(ctx):
     await ctx.send('This channel has been subscribed to the frame.work blog feed.')
     save_subscribed_channels()
 
+# Define a subscribe command that adds the current channel to the subscribed_channels dictionary
+@bot.command()
+async def source(ctx):
+    await ctx.send("https://github.com/MoralCode/framework-discord-feed")
+
 # Define an unsubscribe command that removes the current channel from the subscribed_channels dictionary
 @bot.command()
 async def unsubscribe(ctx):
