@@ -17,6 +17,7 @@ DISCORD_BOT_TOKEN = os.environ['DISCORD_BOT_TOKEN']
 # Set up the RSS feed
 rss_url = 'https://frame.work/blog.rss'
 
+JSON_FILEPATH="data/subscribed_channels.json"
 
 
 # Initialize the subscribed_channels dictionary
@@ -81,13 +82,13 @@ async def on_ready():
 
 # Define a function to save the subscribed_channels dictionary to a file
 def save_subscribed_channels():
-    with open('subscribed_channels.json', 'w') as f:
+    with open(JSON_FILEPATH, 'w') as f:
         json.dump(subscribed_channels, f)
 
 # Define a function to load the subscribed_channels dictionary from a file
 def load_subscribed_channels():
     try:
-        with open('subscribed_channels.json', 'r') as f:
+        with open(JSON_FILEPATH, 'r') as f:
             return json.load(f)
     except FileNotFoundError:
         return {}
