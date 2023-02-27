@@ -1,5 +1,12 @@
-FROM alpine
+FROM python:3.8-slim-buster
 
-RUN apk add rsstail
+RUN pip install pipenv
 
-CMD bash ./rss.sh
+COPY Pipfile .
+COPY Pipfile.lock .
+
+RUN pipenv install
+
+COPY *.py ./
+
+ENTRYPOINT pipenv run python3 bot.py
