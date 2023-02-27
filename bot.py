@@ -70,8 +70,11 @@ async def unsubscribe(ctx):
 @bot.event
 async def on_ready():
     print('Bot is ready.')
-    check_for_new_posts.start()
+        # Load the subscribed_channels dictionary from a file
+    subscribed_channels = load_subscribed_channels()
 
+    # Start the check_for_new_posts loop
+    check_for_new_posts.start()
 
 # Define a function to save the subscribed_channels dictionary to a file
 def save_subscribed_channels():
@@ -86,14 +89,6 @@ def load_subscribed_channels():
     except FileNotFoundError:
         return {}
 
-# Load the subscribed_channels dictionary from a file
-subscribed_channels = load_subscribed_channels()
-
-# Start the check_for_new_posts loop
-check_for_new_posts.start()
 
 # Run the bot
 bot.run(DISCORD_BOT_TOKEN)
-
-# Save the subscribed_channels dictionary to a file on shutdown
-save_subscribed_channels()
