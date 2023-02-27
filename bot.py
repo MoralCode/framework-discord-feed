@@ -55,7 +55,7 @@ check_for_new_posts.last_post_id = None
 async def subscribe(ctx):
     server_id = ctx.guild.id
     subscribed_channels[server_id] = ctx.channel.id
-    await ctx.send('This channel has been subscribed to the example.com blog feed.')
+    await ctx.send('This channel has been subscribed to the frame.work blog feed.')
     save_subscribed_channels()
 
 # Define an unsubscribe command that removes the current channel from the subscribed_channels dictionary
@@ -64,10 +64,10 @@ async def unsubscribe(ctx):
     server_id = ctx.guild.id
     if server_id in subscribed_channels:
         del subscribed_channels[server_id]
-        await ctx.send('This channel has been unsubscribed from the example.com blog feed.')
+        await ctx.send('This channel has been unsubscribed from the frame.work blog feed.')
         save_subscribed_channels()
     else:
-        await ctx.send('This channel is not currently subscribed to the example.com blog feed.')
+        await ctx.send('This channel is not currently subscribed to the frame.work blog feed.')
 
 # Start the task
 @bot.event
