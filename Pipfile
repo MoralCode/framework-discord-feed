@@ -8,6 +8,7 @@ requests = "*"
 "discord.py" = "*"
 python-dotenv = "*"
 feedparser = "*"
+beautifulsoup4 = "*"
 
 [dev-packages]
 
