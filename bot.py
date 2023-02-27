@@ -53,6 +53,7 @@ check_for_new_posts.last_post_id = None
 
 # Define a subscribe command that adds the current channel to the subscribed_channels dictionary
 @bot.command()
+@commands.has_permissions(administrator=True)
 async def subscribe(ctx):
     server_id = ctx.guild.id
     subscribed_channels[server_id] = ctx.channel.id
@@ -66,6 +67,7 @@ async def source(ctx):
 
 # Define an unsubscribe command that removes the current channel from the subscribed_channels dictionary
 @bot.command()
+@commands.has_permissions(administrator=True)
 async def unsubscribe(ctx):
     server_id = ctx.guild.id
     if server_id in subscribed_channels:
