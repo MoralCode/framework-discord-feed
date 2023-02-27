@@ -4,8 +4,11 @@ import discord
 from discord.ext import tasks, commands
 from bs4 import BeautifulSoup
 
+intents = discord.Intents.default() # or .all() if you ticked all, that is easier
+intents.message_content  = True # If you ticked the SERVER MEMBERS INTENT
+
 # Set up the Discord bot
-bot = commands.Bot(command_prefix='!')
+bot = commands.Bot(command_prefix='!', intents=intents)
 
 # Read the bot token from environment variables
 DISCORD_BOT_TOKEN = os.environ['DISCORD_BOT_TOKEN']
