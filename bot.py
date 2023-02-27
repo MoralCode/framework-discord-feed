@@ -12,7 +12,7 @@ DISCORD_BOT_TOKEN = os.environ['DISCORD_BOT_TOKEN']
 DISCORD_CHANNEL_ID = int(os.environ['DISCORD_CHANNEL_ID'])
 
 # Set up the RSS feed
-rss_url = 'https://frame.work/blog/feed.xml'
+rss_url = 'https://frame.work/blog/feed.rss'
 
 # Define a function to check for new posts
 @tasks.loop(minutes=10)
