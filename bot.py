@@ -14,7 +14,7 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 DISCORD_BOT_TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
 # Set up the RSS feed
-rss_url = 'https://frame.work/blog/feed.rss'
+rss_url = 'https://frame.work/blog.rss'
 
 # Initialize the subscribed_channels list
 subscribed_channels = []
