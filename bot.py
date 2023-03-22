@@ -4,6 +4,7 @@ import discord
 from discord.ext import tasks, commands
 from bs4 import BeautifulSoup
 import json
+import logging
 
 intents = discord.Intents.default() # or .all() if you ticked all, that is easier
 intents.message_content  = True # If you ticked the SERVER MEMBERS INTENT
@@ -29,23 +30,28 @@ async def check_for_new_posts():
     # Parse the RSS feed
     feed = feedparser.parse(rss_url)
 
-    # Get the latest post
-    latest_post = feed.entries[0]
+    if len(feed.entries) <= 0:
+        logging.info("feed contains no items")
+    else:
+        # Get the latest post
+        latest_post = feed.entries[0]
+        logging.info("Found post: " + str(latest_post))
 
-    # Check if the latest post has already been sent
-    if latest_post.id != check_for_new_posts.last_post_id:
-        # Save the ID of the latest post
-        check_for_new_posts.last_post_id = latest_post.id
 
-        # Format the post's title, summary, and URL into a Discord message
-        soup = BeautifulSoup(latest_post.summary, 'html.parser')
-        summary = soup.get_text().strip()
-        message = f'New post on the frame.work blog:\n\n**{latest_post.title}**\n{summary}\n{latest_post.link}'
+        # Check if the latest post has already been sent
+        if latest_post.id != check_for_new_posts.last_post_id:
+            # Save the ID of the latest post
+            check_for_new_posts.last_post_id = latest_post.id
 
-        # Send the Discord message to all subscribed channels
-        for channel_id in subscribed_channels.values():
-            channel = bot.get_channel(channel_id)
-            await channel.send(message)
+            # Format the post's title, summary, and URL into a Discord message
+            soup = BeautifulSoup(latest_post.summary, 'html.parser')
+            summary = soup.get_text().strip()
+            message = f'New post on the frame.work blog:\n\n**{latest_post.title}**\n{summary}\n{latest_post.link}'
+
+            # Send the Discord message to all subscribed channels
+            for channel_id in subscribed_channels.values():
+                channel = bot.get_channel(channel_id)
+                await channel.send(message)
 
 
 # Initialize the last_post_id attribute
