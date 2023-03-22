@@ -9,4 +9,6 @@ RUN pipenv install
 
 COPY *.py ./
 
+RUN mkdir data
+
 ENTRYPOINT pipenv run python3 bot.py
