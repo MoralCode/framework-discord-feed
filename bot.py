@@ -27,10 +27,7 @@ SUBSCRIBED_CHANNELS_JSON_FILEPATH="data/subscribed_channels.json"
 # Initialize the subscribed_channels dictionary
 subscribed_channels = {}
 
-# Define a function to check for new posts
-@tasks.loop(minutes=10)
-async def check_for_new_posts():
-    # Parse the RSS feed
+async def check_for_posts():
     feed = feedparser.parse(rss_url)
 
     if len(feed.entries) <= 0:
@@ -59,6 +56,12 @@ async def check_for_new_posts():
 
 # Initialize the last_post_id attribute
 check_for_new_posts.last_post_id = None
+# Define a function to check for new posts
+@tasks.loop(minutes=10)
+async def check_for_new_posts():
+    # Parse the RSS feed
+    await check_for_posts()
+    
 
 # Define a subscribe command that adds the current channel to the subscribed_channels dictionary
 @bot.command()
