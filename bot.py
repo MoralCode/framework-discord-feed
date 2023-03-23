@@ -36,7 +36,7 @@ async def check_for_posts():
     else:
         # Get the latest post
         latest_post = feed.entries[0]
-        logging.info("Found post: " + str(latest_post))
+        logging.info("Found post: " + str(latest_post['link']))
 
 
         # Check if the latest post has already been sent
