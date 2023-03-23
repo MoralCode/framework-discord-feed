@@ -92,7 +92,7 @@ async def unsubscribe(ctx):
 # Start the task
 @bot.event
 async def on_ready():
-    print('Bot is ready.')
+    logging.info('Bot is ready.')
         # Load the subscribed_channels dictionary from a file
     subscribed_channels = load_subscribed_channels()
 
