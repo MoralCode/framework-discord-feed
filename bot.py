@@ -6,6 +6,9 @@ from bs4 import BeautifulSoup
 import json
 import logging
 
+logging.basicConfig(level=logging.INFO)
+
+
 intents = discord.Intents.default() # or .all() if you ticked all, that is easier
 intents.message_content  = True # If you ticked the SERVER MEMBERS INTENT
 
