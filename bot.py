@@ -49,7 +49,7 @@ async def check_for_posts():
             # Format the post's title, summary, and URL into a Discord message
             soup = BeautifulSoup(latest_post.summary, 'html.parser')
             summary = soup.get_text().strip()
-            message = f'New post on the frame.work blog:\n\n**{latest_post.title}**\n{summary}\n{latest_post.link}'
+            message = f'New post on the frame.work blog:\n\n**{latest_post.title}**\n{summary[0:300]} ... \n{latest_post.link}'
 
             # Send the Discord message to all subscribed channels
             for channel_id in subscribed_channels.values():
