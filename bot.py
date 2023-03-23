@@ -22,6 +22,7 @@ DISCORD_BOT_TOKEN = os.environ['DISCORD_BOT_TOKEN']
 rss_url = 'https://frame.work/blog.rss'
 
 SUBSCRIBED_CHANNELS_JSON_FILEPATH="data/subscribed_channels.json"
+LAST_NOTIFIED_POST_ID_FILEPATH="data/lastpostid"
 
 
 # Initialize the subscribed_channels dictionary
@@ -43,6 +44,8 @@ async def check_for_posts():
             # Save the ID of the latest post
             check_for_new_posts.last_post_id = latest_post.id
 
+            save_last_post_id(latest_post.id)
+
             # Format the post's title, summary, and URL into a Discord message
             soup = BeautifulSoup(latest_post.summary, 'html.parser')
             summary = soup.get_text().strip()
@@ -54,8 +57,6 @@ async def check_for_posts():
                 await channel.send(message)
 
 
-# Initialize the last_post_id attribute
-check_for_new_posts.last_post_id = None
 # Define a function to check for new posts
 @tasks.loop(minutes=10)
 async def check_for_new_posts():
@@ -112,6 +113,23 @@ def load_subscribed_channels():
             return json.load(f)
     except FileNotFoundError:
         return {}
+
+
+def save_last_post_id(post_id:str):
+    with open(LAST_NOTIFIED_POST_ID_FILEPATH, 'w') as f:
+        f.write(str(post_id))
+
+# Define a function to load the subscribed_channels dictionary from a file
+def load_last_post_id() -> str:
+    try:
+        with open(LAST_NOTIFIED_POST_ID_FILEPATH, 'r') as f:
+            return f.read()
+    except FileNotFoundError:
+        return ""
+
+# Initialize the last_post_id attribute
+check_for_new_posts.last_post_id = load_last_post_id()
+
 
 
 # Run the bot
