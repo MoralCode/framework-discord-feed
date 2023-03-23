@@ -40,7 +40,9 @@ async def check_for_posts():
 
 
         # Check if the latest post has already been sent
-        if latest_post.id != check_for_new_posts.last_post_id:
+        if latest_post.id == check_for_new_posts.last_post_id:
+            logging.info("No new un-notified posts")
+        else:
             # Save the ID of the latest post
             check_for_new_posts.last_post_id = latest_post.id
 
