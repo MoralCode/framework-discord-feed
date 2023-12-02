@@ -1,4 +1,4 @@
-
+This repo has been deprecated in favor of using https://github.com/aikaterna/aikaterna-cogs for [red bot](https://github.com/Cog-Creators/Red-DiscordBot)
 
 
 
